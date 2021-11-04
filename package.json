@@ -1,0 +1,25 @@
+{
+  "name": "twitch-clip-scraper",
+  "version": "1.0.0",
+  "description": "twitch clip scraper",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaronjoslinwangdu/twitch-clip-scraper.git"
+  },
+  "author": "buckland",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aaronjoslinwangdu/twitch-clip-scraper/issues"
+  },
+  "homepage": "https://github.com/aaronjoslinwangdu/twitch-clip-scraper#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "request": "^2.88.2",
+    "requests": "^0.3.0"
+  }
+}
