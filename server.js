@@ -94,7 +94,9 @@ const getTopThree = (url,accessToken,callback) => {
 
         bodyParsed = JSON.parse(body);
         //console.log("Second largest channel's id is: " + bodyParsed['data'][1]['name']);
-        console.log(bodyParsed);
+        firstChName = bodyParsed['data'][0]['user_name'];
+        console.log("Largest Channel: " + firstChName);
+        document.getElementById(candlestick).innerHTML = "Largest Channel: " + firstChName;
 
 
     });
