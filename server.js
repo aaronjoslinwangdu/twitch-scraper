@@ -22,6 +22,7 @@ const getToken = (url,callback) => {
         if(err) {
             return console.log(err);
         }
+        
         console.log('Status: ${res.statusCode}');
         console.log(body);
 
@@ -29,12 +30,6 @@ const getToken = (url,callback) => {
     });
 
 };
-
-getToken(process.env.GET_TOKEN,(res) => {
-    AT = res.body.access_token;
-    return AT;
-});
-
 
 
 // Function to get the top games on Twitch
@@ -49,7 +44,6 @@ const getGames = (url,accessToken,callback) => {
             'Authorization': 'Bearer ' + accessToken,
         }
     }
-
 
     request.get(gameOptions, (err,res,body) => {
 
@@ -66,9 +60,6 @@ const getGames = (url,accessToken,callback) => {
 
 
 
-
-// Testing function
-
 // Function to get the top 3 channels live on Twitch
 
 const getTopThree = (url,accessToken,callback) => {
@@ -82,21 +73,16 @@ const getTopThree = (url,accessToken,callback) => {
         }
     }
 
-
     request.get(topThreeOptions, (err,res,body) => {
 
         if(err) {
             return console.log(err);
         }
 
-        console.log('Status: ${res.statusCode}');
-        //console.log(JSON.parse(body));
-
         bodyParsed = JSON.parse(body);
-        //console.log("Second largest channel's id is: " + bodyParsed['data'][1]['name']);
         firstChName = bodyParsed['data'][0]['user_name'];
         console.log("Largest Channel: " + firstChName);
-        document.getElementById(candlestick).innerHTML = "Largest Channel: " + firstChName;
+        
 
 
     });
@@ -104,16 +90,83 @@ const getTopThree = (url,accessToken,callback) => {
 
 
 
+// function to get top clip from league after a certain date in .env file
+
+const getLolClips = (url,accessToken,callback) => {
+
+    const lolClipsOptions = {
+        url: process.env.GET_LOL_CLIPS,
+        method: 'GET',
+        headers: {
+            'Client-ID': process.env.CLIENT_ID,
+            'Authorization': 'Bearer ' + accessToken,
+        }
+    }
+
+    request.get(lolClipsOptions, (err,res,body) => {
+
+        if(err) {
+            return console.log(err);
+        }
+
+        bodyParsed = JSON.parse(body);
+        topClipUrl = bodyParsed['data'][0]['url'];
+        console.log(topClipUrl);
+
+
+    });
+};
+
+
+
+// get top 3 tyler1 clips from date specified in env
+
+const getTylerClips = (url,accessToken,callback) => {
+
+    const tylerClipsOptions = {
+        url: process.env.GET_TYLER_CLIPS,
+        method: 'GET',
+        headers: {
+            'Client-ID': process.env.CLIENT_ID,
+            'Authorization': 'Bearer ' + accessToken,
+        }
+    }
+
+    request.get(tylerClipsOptions, (err,res,body) => {
+
+        if(err) {
+            return console.log(err);
+        }
+
+        bodyParsed = JSON.parse(body);
+        
+        for (var i = 0; i < 3; i++) {
+            clipUrl = bodyParsed['data'][i]['url'];
+            console.log("Clip " + i + ": " + clipUrl);
+        }
+        
+    });
+};
+
+
+// ------------------------------------------------------------------------------------------------- //
+
+
+
+// runs getToken to get and set our access token variable
+getToken(process.env.GET_TOKEN,(res) => {
+    AT = res.body.access_token;
+    return AT;
+});
+
 
 // testing function
+var topClipUrl = '';
+
 setTimeout(() => {
     
-    /*getGames(process.env.GET_NAME,AT,(response) => {
-
-    })*/
-    
-    getTopThree(process.env.GET_TOP_THREE,AT,(response) =>{
-        console.log(JSON.parse(response));
+    getTylerClips(process.env.GET_TYLER_CLIPS,AT,(res) =>{
+        
     });
 
 },1000)
