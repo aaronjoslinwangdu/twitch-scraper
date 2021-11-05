@@ -1,7 +1,10 @@
 require('dotenv').config();
 const request = require('request');
 
-var AT = '';
+var AT = '';  // Access token variable
+
+
+// Function to get the token
 
 const getToken = (url,callback) => {
 
@@ -15,7 +18,7 @@ const getToken = (url,callback) => {
         }
     };
 
-    request.post(options,(err,res,body) => {
+    request.post(options, (err,res,body) => {
         if(err) {
             return console.log(err);
         }
@@ -32,6 +35,9 @@ getToken(process.env.GET_TOKEN,(res) => {
     return AT;
 });
 
+
+
+// Function to get the top games on Twitch
 
 const getGames = (url,accessToken,callback) => {
 
@@ -58,8 +64,48 @@ const getGames = (url,accessToken,callback) => {
     });
 };
 
-setTimeout(() => {
-    getGames(process.env.GET_GAMES,AT,(response) => {
 
+
+
+// Testing function
+
+const getAsd = (url,accessToken,callback) => {
+
+    const asdOptions = {
+        url: process.env.GET_T1_ID,
+        method: 'GET',
+        headers: {
+            'Client-ID': process.env.CLIENT_ID,
+            'Authorization': 'Bearer ' + accessToken,
+        }
+    }
+
+
+    request.get(asdOptions, (err,res,body) => {
+
+        if(err) {
+            return console.log(err);
+        }
+
+        console.log('Status: ${res.statusCode}');
+        console.log(JSON.parse(body));
+        
+       
+       
+
+
+
+    });
+};
+
+
+
+
+// testing function
+setTimeout(() => {
+    
+    getAsd(process.env.GET_T1_ID,AT,(response) =>{
+        console.log()
     })
+
 },1000)
