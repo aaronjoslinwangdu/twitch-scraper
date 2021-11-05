@@ -69,10 +69,12 @@ const getGames = (url,accessToken,callback) => {
 
 // Testing function
 
-const getAsd = (url,accessToken,callback) => {
+// Function to get the top 3 channels live on Twitch
 
-    const asdOptions = {
-        url: process.env.GET_T1_ID,
+const getTopThree = (url,accessToken,callback) => {
+
+    const topThreeOptions = {
+        url: process.env.GET_TOP_THREE,
         method: 'GET',
         headers: {
             'Client-ID': process.env.CLIENT_ID,
@@ -81,18 +83,18 @@ const getAsd = (url,accessToken,callback) => {
     }
 
 
-    request.get(asdOptions, (err,res,body) => {
+    request.get(topThreeOptions, (err,res,body) => {
 
         if(err) {
             return console.log(err);
         }
 
         console.log('Status: ${res.statusCode}');
-        console.log(JSON.parse(body));
-        
-       
-       
+        //console.log(JSON.parse(body));
 
+        bodyParsed = JSON.parse(body);
+        //console.log("Second largest channel's id is: " + bodyParsed['data'][1]['name']);
+        console.log(bodyParsed);
 
 
     });
@@ -104,8 +106,12 @@ const getAsd = (url,accessToken,callback) => {
 // testing function
 setTimeout(() => {
     
-    getAsd(process.env.GET_T1_ID,AT,(response) =>{
-        console.log()
-    })
+    /*getGames(process.env.GET_NAME,AT,(response) => {
+
+    })*/
+    
+    getTopThree(process.env.GET_TOP_THREE,AT,(response) =>{
+        console.log(JSON.parse(response));
+    });
 
 },1000)
